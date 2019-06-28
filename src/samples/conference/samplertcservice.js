@@ -107,6 +107,33 @@ var pageOption = { page: 1, per_page: 100 };
   });
 })();
 
+app.get('/', function (req, res) {
+  if (req.session.loggedin) {
+		res.sendFile('/index.html');
+	} else {
+		res.redirect('/login');
+	}
+});
+
+app.get('/login', function(req, res) {
+  res.sendFile('/login.html');
+});
+
+app.post('/login', function(req, res) {
+	var username = req.body.username;
+  var password = req.body.password;
+  icsREST.API.login(username, password, function(user) {
+    if (user.length > 0) {
+      req.session.loggedin = true;
+      req.session.username = username;
+      response.redirect('/');
+    } else {
+      response.send('Incorrect Username and/or Password!');
+    }		
+  }, function(err) {
+    res.send(err);
+  });
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // legacy interface begin

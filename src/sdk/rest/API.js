@@ -1450,6 +1450,40 @@ OWT_REST.API = (function(OWT_REST) {
     send('POST', 'rooms/' + room + '/tokens/', {preference: preference, user: user, role: role}, callback, callbackError);
   };
 
+  /**
+     * @function login
+     * @desc This function to login a user.
+     * @memberOf OWT_REST.API
+     * @param {string} userName                      -login user name
+     * @param {string} userPwd                       -login user password
+     * @param {function} callback                    -Callback function on success
+     * @param {function} callbackError               -Callback function on error
+     * @example
+  var userName = 'abc';
+  var userPwd = '123456';
+  OWT_REST.API.login(userName, userPwd, function(user) {
+    console.log ('User created:' user);
+  }, function(status, error) {
+    // HTTP status and error
+    console.log(status, error);
+  });
+     */
+  var login = function(userName, userPwd, callback, callbackError) {
+    if (typeof userName !== 'string' || typeof userPwd !== 'string') {
+      if (typeof callbackError === 'function')
+        callbackError(400, 'Invalid argument.');
+      return;
+    }
+
+    send('POST', '/users/login', {
+      user: userName,
+      pwd: userPwd
+    }, function(userRtn) {
+      var user = JSON.parse(userRtn);
+      callback(user);
+    }, callbackError);
+  };
+
   return {
     init: init,
 
@@ -1501,6 +1535,9 @@ OWT_REST.API = (function(OWT_REST) {
     endSipCall: endSipCall,
 
     //Tokens management.
-    createToken: createToken
+    createToken: createToken,
+
+    //users
+    login: login
   };
 }(OWT_REST));
