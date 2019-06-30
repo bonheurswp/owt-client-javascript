@@ -1475,7 +1475,7 @@ OWT_REST.API = (function(OWT_REST) {
       return;
     }
 
-    send('POST', '/users/login', {
+    send('POST', 'users/login', {
       user: userName,
       pwd: userPwd
     }, function(userRtn) {

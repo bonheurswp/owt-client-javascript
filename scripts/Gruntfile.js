@@ -57,7 +57,7 @@ window.L = L;\n\
       },
       dev: {
         src: [sdkEntry],
-        dest: 'dist/sdk-debug/owt.js',
+        dest: sdkOutput,
         options: {
           browserifyOptions: {
             standalone: 'Owt',
@@ -259,6 +259,6 @@ window.L = L;\n\
 
   grunt.registerTask('prepare', ['browserify:sinon', 'browserify:chai_as_promised']);
   grunt.registerTask('pack', ['browserify:dist', 'concat:rest', 'uglify:dist', 'copy:dist', 'string-replace', 'compress:dist', 'jsdoc:dist']);
-  grunt.registerTask('dev', ['browserify:dev', 'connect:server']);
+  grunt.registerTask('dev', ['browserify:dev','concat:rest', 'copy:dist', 'string-replace']);
   grunt.registerTask('default', ['pack']);
 };

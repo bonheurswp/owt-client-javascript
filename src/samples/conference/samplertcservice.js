@@ -34,16 +34,25 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   errorhandler = require('errorhandler'),
   morgan = require('morgan'),
+  session = require('express-session'),
+  bcrypt = require('bcryptjs'),
   fs = require('fs'),
   https = require('https'),
   icsREST = require('./rest');
 
 var app = express();
+app.set('views', __dirname + '/public/views');
+app.set('view engine', 'ejs');
 
 // app.configure ya no existe
 app.use(errorhandler());
 app.use(morgan('dev'));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public', {index: false}));
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -63,13 +72,15 @@ app.use(function(req, res, next) {
   }
 });
 
-icsREST.API.init('_service_ID_', '_service_KEY_', 'https://localhost:3000/', false);
+icsREST.API.init('5cfd2f28178adb1188769f58', '4NE55w91YDWNnVvMSEMj3v8unCypu0iESOJFvrlJGEMohMvjOBIsoQx0LYEE2syZMtG4/2IhHp0z6iVnduLEEbQ9Upqzu0ny75ccucnMSKf/XM40AMYFHTvzqZzJfR/ejKwQ0/KIes0dpb5LTHEiAKg4wLl6Xujjhrr6X9caa5M=', 'https://192.168.2.35:3000/', false);
 
+var avaiableRooms;
 var sampleRoom;
 var pageOption = { page: 1, per_page: 100 };
 (function initSampleRoom () {
   icsREST.API.getRooms(pageOption, function(rooms) {
     console.log(rooms.length + ' rooms in this service.');
+    avaiableRooms = [...rooms];
     for (var i = 0; i < rooms.length; i++) {
       if (sampleRoom === undefined && rooms[i].name === 'sampleRoom') {
         sampleRoom = rooms[i]._id;
@@ -108,29 +119,43 @@ var pageOption = { page: 1, per_page: 100 };
 })();
 
 app.get('/', function (req, res) {
+  console.log('home page');
   if (req.session.loggedin) {
-		res.sendFile('/index.html');
+    //res.sendFile(__dirname + '/public/index.html');
+    res.render('home', { rooms: avaiableRooms });
+	} else {
+		res.redirect('/login');
+	}
+}); 
+
+app.get('/room', function (req, res) {
+  console.log('room page');
+  if (req.session.loggedin) {
+    res.sendFile(__dirname + '/public/index.html');
 	} else {
 		res.redirect('/login');
 	}
 });
 
 app.get('/login', function(req, res) {
-  res.sendFile('/login.html');
+  res.sendFile(__dirname + '/public/login.html');
 });
 
 app.post('/login', function(req, res) {
 	var username = req.body.username;
-  var password = req.body.password;
+  var password = bcrypt.hashSync(req.body.password, 8);
+  console.log('user: ' , username)
   icsREST.API.login(username, password, function(user) {
-    if (user.length > 0) {
+    console.log('loggedin User:' , user);
+    if (user) {
       req.session.loggedin = true;
       req.session.username = username;
-      response.redirect('/');
+      res.redirect('/');
     } else {
-      response.send('Incorrect Username and/or Password!');
+      res.send('Incorrect Username and/or Password!');
     }		
   }, function(err) {
+    console.log('logging User by error: ' , err);
     res.send(err);
   });
 });

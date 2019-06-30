@@ -43,5 +43,10 @@
   },
   "scripts": {
     "postinstall": "cd scripts && grunt prepare"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^2.6.2",
+    "express-session": "^1.16.2"
   }
 }
