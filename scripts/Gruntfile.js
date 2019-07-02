@@ -204,9 +204,9 @@ window.L = L;\n\
          ]
         }
       },
-      dist_conference:{
+      dist_conference_room:{
          files: {
-          'dist/samples/conference/public/index.html': 'src/samples/conference/public/index.html',
+          'dist/samples/conference/public/index.html': 'src/samples/conference/public/index.html'
         },
         options: {
         replacements: [
@@ -216,7 +216,20 @@ window.L = L;\n\
           },
          ]
         }
-      }
+      },
+      dist_conference_home:{
+        files: {
+         'dist/samples/conference/public/views/home.ejs': 'src/samples/conference/public/views/home.ejs',
+       },
+       options: {
+       replacements: [
+         {
+           pattern: '<script src="../../../../dist/sdk-debug/owt.js" type="text/javascript"></script>',
+           replacement: '<script src="../scripts/owt.js" type="text/javascript"></script>'
+         },
+        ]
+       }
+     }
     },
     compress:{
       dist:{

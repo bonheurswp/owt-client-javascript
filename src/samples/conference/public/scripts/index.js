@@ -139,6 +139,15 @@ const runSocketIOSample = function() {
                 if (isPublish !== 'false') {
                     const audioConstraintsForMic = new Owt.Base.AudioTrackConstraints(Owt.Base.AudioSourceInfo.MIC);
                     const videoConstraintsForCamera = new Owt.Base.VideoTrackConstraints(Owt.Base.VideoSourceInfo.CAMERA);
+                    
+                    // get select devices from local storage
+                    if (localStorage.hasOwnProperty('selectedaudioinput')) {
+                        audioConstraintsForMic.deviceId = localStorage.getItem('selectedaudioinput');
+                    };
+                    if (localStorage.hasOwnProperty('selectedvideoinput')) {
+                        videoConstraintsForCamera.deviceId = localStorage.getItem('selectedvideoinput');
+                    };
+
                     let mediaStream;
                     Owt.Base.MediaStreamFactory.createMediaStream(new Owt.Base.StreamConstraints(
                         audioConstraintsForMic, videoConstraintsForCamera)).then(stream => {

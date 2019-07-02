@@ -229,4 +229,21 @@ export class MediaStreamFactory {
       return navigator.mediaDevices.getUserMedia(mediaConstraints);
     }
   }
+
+  /**
+   * @function getAvailableDevices
+   * @static
+   * @desc Get all available devices for cameras and mics
+   * @memberof Owt.Base.MediaStreamFactory
+   * @returns {Promise<devices, Error>} Return a promise that is resolved when get all avaible devcies, or rejected if failed 
+   */
+  static getAvailableDevices() {
+    return navigator.mediaDevices.enumerateDevices()
+    .then(function(devices) {
+      return devices;
+    })
+    .catch(function(err) {
+      console.log(err.name + ": " + err.message);
+    });
+  }
 }
