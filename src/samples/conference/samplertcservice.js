@@ -80,6 +80,7 @@ var pageOption = { page: 1, per_page: 100 };
 (function initSampleRoom () {
   icsREST.API.getRooms(pageOption, function(rooms) {
     console.log(rooms.length + ' rooms in this service.');
+    // console.log('rooms', rooms);
     avaiableRooms = [...rooms];
     for (var i = 0; i < rooms.length; i++) {
       if (sampleRoom === undefined && rooms[i].name === 'sampleRoom') {

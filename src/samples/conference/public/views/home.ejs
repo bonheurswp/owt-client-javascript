@@ -77,7 +77,11 @@
 			<h1>Home Page</h1>
 			<ul>
         <% for(var i=0; i<rooms.length; i++) {%>
-           <li><a href="/room?room=<%= rooms[i]._id %>"><%= rooms[i].name %></a></li>
+						<% if (rooms[i].views.length === 0) { %>
+							 <li><a href="/room?room=<%= rooms[i]._id %>&forward=true"><%= rooms[i].name %></a></li>
+						<% } else{ %>
+							<li><a href="/room?room=<%= rooms[i]._id %>"><%= rooms[i].name %></a></li>
+						<% } %>	 
         <% } %>
         </ul>
 		</div>

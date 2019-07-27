@@ -156,7 +156,9 @@ const runSocketIOSample = function() {
                             mediaStream, new Owt.Base.StreamSourceInfo(
                                 'mic', 'camera'));
                         $('.local video').get(0).srcObject = stream;
-                        conference.publish(localStream).then(publication => {
+                        conference.publish(localStream, {video: [{codec: {name: 'h264'}, profile: 'high'}]}).then(publication => {
+                        // conference.publish(localStream).then(publication => {
+                            console.log("publish stream: ", publication);
                             publicationGlobal = publication;
                             mixStream(myRoom, publication.id, 'common')
                             publication.addEventListener('error', (err) => {
