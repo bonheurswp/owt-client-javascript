@@ -72,7 +72,9 @@ app.use(function(req, res, next) {
   }
 });
 
-icsREST.API.init('5cfd2f28178adb1188769f58', '4NE55w91YDWNnVvMSEMj3v8unCypu0iESOJFvrlJGEMohMvjOBIsoQx0LYEE2syZMtG4/2IhHp0z6iVnduLEEbQ9Upqzu0ny75ccucnMSKf/XM40AMYFHTvzqZzJfR/ejKwQ0/KIes0dpb5LTHEiAKg4wLl6Xujjhrr6X9caa5M=', 'https://192.168.2.35:3000/', false);
+// icsREST.API.init('5cfd2f28178adb1188769f58', '4NE55w91YDWNnVvMSEMj3v8unCypu0iESOJFvrlJGEMohMvjOBIsoQx0LYEE2syZMtG4/2IhHp0z6iVnduLEEbQ9Upqzu0ny75ccucnMSKf/XM40AMYFHTvzqZzJfR/ejKwQ0/KIes0dpb5LTHEiAKg4wLl6Xujjhrr6X9caa5M=', 'https://192.168.2.35:3000/', false);
+icsREST.API.init('5d3c593b8ed43c112b231f13', 'yd/1VCFAn0Ie+Eye1Si9dTkWDVgzWIZcGHEEI/z5nrBZByb7O1IbwSGAukUqIKjFCruAuQImk/eykkPJ60ab5rUCq4U7Ds9RNBRk6PoT/9O2kIh20dZzo8Y67Rr0k+S4/SeeV58boXoE75SL/TX7g0SQHQv3Csa5zHi4081NvFY=', 'https://192.168.2.35:3000/', false);
+
 
 var avaiableRooms;
 var sampleRoom;

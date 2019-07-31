@@ -47,7 +47,15 @@ const runSocketIOSample = function() {
 
     var subscribeForward = getParameterByName('forward') === 'true'?true:false;
     var isSelf = getParameterByName('self') === 'false'?false:true;
-    conference = new Owt.Conference.ConferenceClient();
+    let config = {
+        iceServers: [{
+            urls: 'stun:13.58.37.232:3478'
+         }, {
+            urls: 'stun:stun.l.google.com:19302'
+         }
+        ]
+    };
+    conference = new Owt.Conference.ConferenceClient(config);
     function renderVideo(stream){
         let subscirptionForward=null;
         function subscribeDifferentResolutionForward(forward, resolution){
@@ -131,6 +139,7 @@ const runSocketIOSample = function() {
         createToken(myRoom, 'user', 'presenter', function(response) {
             var token = response;
             conference.join(token).then(resp => {
+                console.log('join res: ', resp);
                 myId = resp.self.id;
                 myRoom = resp.id;
                 if(mediaUrl){

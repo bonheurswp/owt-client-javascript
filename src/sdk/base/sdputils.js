@@ -561,6 +561,8 @@ export function reorderCodecs(sdp, type, codecs) {
     return sdp;
   }
 
+  console.log('codes to reorder: ' , codecs);
+  console.log('sdp before reorder', sdp);
   codecs = type === 'audio' ? codecs.concat(audioCodecWhiteList) : codecs.concat(
       videoCodecWhiteList);
 
@@ -600,6 +602,8 @@ export function reorderCodecs(sdp, type, codecs) {
   }
 
   sdp = sdpLines.join('\r\n');
+
+  console.log('sdp after reorder', sdp);
   return sdp;
 }
 

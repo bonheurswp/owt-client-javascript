@@ -76,6 +76,7 @@ export class ConferencePeerConnectionChannel extends EventDispatcher {
   }
 
   publish(stream, options) {
+    console.log('publish options: ', options);
     if (options === undefined) {
       options = {audio: !!stream.mediaStream.getAudioTracks(), video: !!stream
           .mediaStream.getVideoTracks()};
@@ -207,6 +208,7 @@ export class ConferencePeerConnectionChannel extends EventDispatcher {
       let localDesc;
       this._pc.createOffer(offerOptions).then((desc) => {
         if (options) {
+          console.log('publish options2: ', options);
           desc.sdp = this._setRtpReceiverOptions(desc.sdp, options);
         }
         return desc;
@@ -650,6 +652,7 @@ export class ConferencePeerConnectionChannel extends EventDispatcher {
   }
 
   _setRtpReceiverOptions(sdp, options) {
+    console.log('set rtp reciever sdp: ', sdp);
     sdp = this._setCodecOrder(sdp, options);
     return sdp;
   }

@@ -299,6 +299,7 @@ export const ConferenceClient = function(config, signalingImpl) {
     // Construct an signaling sender/receiver for ConferencePeerConnection.
     const signalingForChannel = Object.create(EventModule.EventDispatcher);
     signalingForChannel.sendSignalingMessage = sendSignalingMessage;
+    console.log("connection config: ", config);
     const pcc = new ConferencePeerConnectionChannel(
         config, signalingForChannel);
     pcc.addEventListener('id', (messageEvent) => {
@@ -358,6 +359,7 @@ export const ConferenceClient = function(config, signalingImpl) {
       };
 
       signaling.connect(host, isSecured, loginInfo).then((resp) => {
+        console.log("room connect res: ", resp);
         signalingState = SignalingState.CONNECTED;
         room = resp.room;
         if (room.streams !== undefined) {
